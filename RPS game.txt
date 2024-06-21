@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Function to generate a random choice
+int generateRandomChoice() {
+    return rand() % 3;
+}
+
+// Function to get the choice of the user
+int getUserChoice() {
+    int choice;
+    printf("Enter your choice (0 for Rock, 1 for Paper, 2 for Scissors): ");
+    scanf("%d", &choice);
+    return choice;
+}
+
+// Function to determine the winner
+int determineWinner(int userChoice, int computerChoice) {
+    if (userChoice == computerChoice) {
+        return 0;  // Tie
+    } else if ((userChoice == 0 && computerChoice == 2) || (userChoice == 1 && computerChoice == 0) || (userChoice == 2 && computerChoice == 1)) {
+        return 1;  // User wins
+    } else {
+        return -1;  // Computer wins
+    }
+}
+
+int main() {
+    srand(time(NULL));  // Seed the random number generator
+
+    int userScore = 0;
+    int computerScore = 0;
+
+    while (1) {
+        int userChoice = getUserChoice();
+        int computerChoice = generateRandomChoice();
+
+        printf("User chose: ");
+        switch (userChoice) {
+            case 0:
+                printf("Rock\n");
+                break;
+            case 1:
+                printf("Paper\n");
+                break;
+            case 2:
+                printf("Scissors\n");
+                break;
+        }
+
+        printf("Computer chose: ");
+        switch (computerChoice) {
+            case 0:
+                printf("Rock\n");
+                break;
+            case 1:
+                printf("Paper\n");
+                break;
+            case 2:
+                printf("Scissors\n");
+                break;
+        }
+
+        int winner = determineWinner(userChoice, computerChoice);
+
+        if (winner == 0) {
+            printf("It's a tie!\n");
+        } else if (winner == 1) {
+            printf("User wins this round!\n");
+            userScore++;
+        } else {
+            printf("Computer wins this round!\n");
+            computerScore++;
+        }
+
+        printf("User Score: %d, Computer Score: %d\n", userScore, computerScore);
+
+        char playAgain;
+        printf("Do you want to play again? (y/n): ");
+        scanf(" %c", &playAgain);
+        if (playAgain == 'n') {
+            break;
+        }
+    }
+
+    printf("Final Score: User - %d, Computer - %d\n", userScore, computerScore);
+
+    return 0;
+}
